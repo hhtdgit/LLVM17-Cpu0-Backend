@@ -10,8 +10,8 @@ Cpu0 是一种为教育目的设计的简单 RISC 架构。更多关于 Cpu0 架
 
 项目主要参考自两个tutorial：
 
-- 一个是llvm官方的cpu0教程，基于llvm3完成。
-- 另一个是知乎用户P2Tree创建的，基于LLVM 8完成。
+- 一个是llvm官方的cpu0教程，基于llvm3完成，该教程位于此[链接](https://jonathan2251.github.io/lbd/about.html)。
+- 另一个是知乎用户P2Tree创建的，基于LLVM 8完成，该教程位于此[链接](https://zhuanlan.zhihu.com/p/351848328)。
 
 但是两个教程都比较老，现在已经LLVM 17了，很多接口都已经过时，因此我在这里尝试使用LLVM 17重新完成Cpu0后端。
 

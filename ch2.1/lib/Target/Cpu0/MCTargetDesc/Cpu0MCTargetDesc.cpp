@@ -38,17 +38,18 @@ using namespace llvm;
 
 // Select the Cpu0 Architecture Feature for the given triple and cpu name.
 // The function will be called at command 'llvm-objdump -d' for Cpu0 elf input.
-static StringRef selectCpu0ArchFeature(const Triple &TT, StringRef CPU) {
+static std::string selectCpu0ArchFeature(const Triple &TT, StringRef CPU) {
+  std::string Cpu0ArchFeature;
     if (CPU.empty() || CPU == "generic") {
       if (TT.getArch() == Triple::cpu0 || TT.getArch() == Triple::cpu0el) {
         if (CPU.empty() || CPU == "cpu032II") {
-            CPU = "cpu032II";
+          Cpu0ArchFeature = "+cpu032II";
         } else if (CPU == "cpu032I") {
-            CPU = "cpu032I";
+          Cpu0ArchFeature = "+cpu032I";
         }
       }
     }
-    return CPU;
+    return Cpu0ArchFeature;
   }
   
   static MCInstrInfo *createCpu0MCInstrInfo() {
@@ -65,15 +66,15 @@ static StringRef selectCpu0ArchFeature(const Triple &TT, StringRef CPU) {
 
   static MCSubtargetInfo *createCpu0MCSubtargetInfo(const Triple &TT,
         StringRef CPU, StringRef FS) {
-    StringRef Arch = selectCpu0ArchFeature(TT, CPU);
+    std::string ArchFS = selectCpu0ArchFeature(TT, CPU);
     if (!FS.empty()) {
-      if (!Arch.empty()) {
-        Arch = Arch;//to fix "Arch, FS"
+      if (!ArchFS.empty()) {
+        ArchFS = ArchFS + "," + FS.str();//to fix "Arch, FS"
       } else {
-        Arch = FS;
+        ArchFS = FS;
       }
     }
-    return createCpu0MCSubtargetInfoImpl(TT, CPU, CPU, Arch);
+    return createCpu0MCSubtargetInfoImpl(TT, CPU, CPU, ArchFS);
     // createCpu0MCSubtargetInfoImpl defined in Cpu0GenSubtargetInfo.inc
 }
 

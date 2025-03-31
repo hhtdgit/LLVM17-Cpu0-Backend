@@ -70,14 +70,14 @@ class AlignedLoad<PatFrag Node>
   : PatFrag<(ops node:$ptr), (Node node:$ptr),
             [{
               LoadSDNode *LD = cast<LoadSDNode>(N);
-              return LD->getMemoryVT().getSizeInBits()/8 <= LD->getAlignment();
+              return LD->getMemoryVT().getSizeInBits()/8 <= LD->getAlign().value();
             }]>;
 
 class AlignedStore<PatFrag Node>
   : PatFrag<(ops node:$val, node:$ptr), (Node node:$val, node:$ptr),
             [{
               StoreSDNode *ST = cast<StoreSDNode>(N);
-              return ST->getMemoryVT().getSizeInBits()/8 <= ST->getAlignment();
+              return ST->getMemoryVT().getSizeInBits()/8 <= ST->getAlign().value();
             }]>;
 
 // Load/Store PatFrags

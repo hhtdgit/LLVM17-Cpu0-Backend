@@ -42,7 +42,7 @@ void Cpu0AnalyzeImmediate::GetInstSeqLsORi(uint64_t Imm, unsigned RemSize,
 
 void Cpu0AnalyzeImmediate::GetInstSeqLsSHL(uint64_t Imm, unsigned RemSize,
                                            InstSeqLs &SeqLs) {
-  unsigned Shamt = APInt(Imm, 64).countTrailingZeros();
+  unsigned Shamt = APInt(64, Imm).countTrailingZeros();
   GetInstSeqLs(Imm >> Shamt, RemSize - Shamt, SeqLs);
   AddInstr(SeqLs, Inst(SHL, Shamt));
 }
